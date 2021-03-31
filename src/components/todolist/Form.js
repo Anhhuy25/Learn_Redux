@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { CHANGE_VALUE, ADD_PEOPLE, EDIT, CHECK_STATUS } from "../../redux/todolist/actions";
 import FilterStatus from "./FilterStatus";
 import Todo from "./Todo";
@@ -18,6 +18,9 @@ function Form({ value, people, isEditing, editID, filterStatus, dispatch }) {
       dispatch({ type: ADD_PEOPLE });
     }
   };
+
+  const todos = useSelector((state) => state.people);
+  console.log(todos);
 
   return (
     <div>
