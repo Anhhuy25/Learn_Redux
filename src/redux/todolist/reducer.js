@@ -19,7 +19,12 @@ const reducer = (state = initialStore, action) => {
       name: state.value,
       isComplete: false,
     };
-    return { ...state, people: [...state.people, newPeople], value: "" };
+    return {
+      ...state,
+      people: [...state.people, newPeople],
+      filterStatus: [...state.filterStatus, newPeople],
+      value: "",
+    };
   }
   if (action.type === REMOVE) {
     return { ...state, people: state.people.filter((person) => person.id !== action.payload) };
@@ -51,12 +56,30 @@ const reducer = (state = initialStore, action) => {
   }
   if (action.type === CHECK_ISCOMPLETE) {
     const specificItem = state.people.map((person) => {
-      if (person.id === action.payload) {
+      if (person.id === action.payload.id) {
         return { ...person, isComplete: !person.isComplete };
       }
       return person;
     });
-    return { ...state, people: specificItem };
+    const specificItem2 = state.filterStatus
+      .map((person) => {
+        if (person.id === action.payload.id) {
+          return { ...person, isComplete: !person.isComplete };
+        }
+        return person;
+      })
+      .filter((person) => {
+        switch (action.payload.sta) {
+          case "completed":
+            return person.isComplete === true;
+          case "incomplete":
+            return person.isComplete === false;
+          default:
+            return person;
+        }
+      });
+
+    return { ...state, people: specificItem, filterStatus: specificItem2 };
   }
   return state;
 };

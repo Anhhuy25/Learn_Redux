@@ -28,7 +28,7 @@ function Form({ value, people, isEditing, editID, filterStatus, dispatch }) {
         <option value='completed'>completed</option>
         <option value='incomplete'>incomplete</option>
       </select>
-      {people.map((person) => {
+      {filterStatus.map((person) => {
         return <Todo key={person.id} {...person} />;
       })}
     </div>
