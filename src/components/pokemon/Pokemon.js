@@ -4,40 +4,33 @@ import { connect } from "react-redux";
 import { FETCH_INFO } from "../../redux/pokemon/actions";
 import "./grid.css";
 
-function Pokemon({ name, url, dispatch, listInfo, page }) {
-  const [newListInfo, setNewListInfo] = React.useState([]);
-
-  const fetchInfo = async () => {
-    const response = await axios(url).catch((err) => console.log(err));
-    if (response) {
-      const info = response.data;
-      dispatch({ type: FETCH_INFO, payload: info });
-    }
-  };
-
-  React.useEffect(() => {
-    fetchInfo();
-  }, [url]);
+function Pokemon({ name, url, dispatch, listInfo }) {
+  // const fetchInfo = async () => {
+  //   const response = await axios(url).catch((err) => console.log(err));
+  //   if (response) {
+  //     const info = response.data;
+  //     const { front_default } = info.sprites.other["official-artwork"];
+  //     const { id } = info;
+  //     dispatch({ type: FETCH_INFO, payload: { id, front_default } });
+  //   }
+  // };
 
   // React.useEffect(() => {
-  //   const newList = listInfo.sort((a, b) => a.id - b.id);
-  //   setNewListInfo(newList);
-  // });
+  //   fetchInfo();
+  // }, [url]);
 
   return (
     <div className='col l-2-4'>
-      {/* {newListInfo.map((info, index) => {
-        const { id, name } = info;
-        const { front_shiny } = info.sprites;
-        if (id === index + 1) {
+      {/* {listInfo
+        .sort((a, b) => a.id - b.id)
+        .map((info, index) => {
           return (
-            <div key={id}>
-              <img src={front_shiny} alt={name} />
-              <p>{name}</p>
+            <div key={info.id}>
+              <img src={info.front_default} alt={name} />
             </div>
           );
-        }
-      })} */}
+          // }
+        })} */}
       <p>{name}</p>
     </div>
   );

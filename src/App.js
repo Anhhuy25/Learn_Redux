@@ -21,7 +21,6 @@ function App({ isLoading, dispatch }) {
       //   .then((response) => console.log(response))
       //   .catch((err) => console.log(err));
       const data = response.data;
-      //console.log(data);
       dispatch({ type: FETCH_PKM, payload: pagination(data.results) });
     }
   };

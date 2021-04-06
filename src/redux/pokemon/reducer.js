@@ -1,4 +1,4 @@
-import { LOADING, FETCH_PKM, FETCH_INFO, NEW_FETCH_PKM } from "./actions";
+import { LOADING, FETCH_PKM, FETCH_INFO } from "./actions";
 
 const initialStore = {
   isLoading: true,
