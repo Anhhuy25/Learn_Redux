@@ -30,11 +30,19 @@ const reducer = (state = initialStore, action) => {
     return { ...state, people: state.people.filter((person) => person.id !== action.payload) };
   }
   if (action.type === FIX) {
-    const specificItem = state.people.find((person) => person.id === action.payload);
+    //const specificItem = state.people.find((person) => person.id === action.payload);
+    const specificItem = state.filterStatus.find((person) => person.id === action.payload);
     return { ...state, value: specificItem.name, isEditing: true, editID: action.payload };
   }
   if (action.type === EDIT) {
-    return { ...state, people: action.payload, value: "", isEditing: false, editID: null };
+    return {
+      ...state,
+      people: action.payload,
+      filterStatus: action.payload,
+      value: "",
+      isEditing: false,
+      editID: null,
+    };
   }
   if (action.type === CHECK_STATUS) {
     switch (action.payload) {
