@@ -3,3 +3,100 @@
   padding: 0;
   margin: 0;
 }
+
+.btn {
+  margin: 12px 0;
+}
+
+.next-btn {
+  padding: 8px 12px;
+  margin-left: 12px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.prev-btn {
+  padding: 8px 12px;
+  margin-right: 12px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.pkm-img img {
+  width: 50%;
+}
+
+.pkm-nameid a {
+  color: #2769be;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+
+.pkm-nameid a:hover {
+  color: #a42121;
+  text-decoration: underline;
+}
+
+.pkm-id {
+  color: #737373;
+}
+
+.pkm-types {
+  display: flex;
+  justify-content: center;
+}
+
+.pkm-type {
+  padding: 5px;
+  margin-bottom: 12px;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+
+.info-name {
+  text-transform: capitalize;
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+.info-btn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.info-type {
+  padding: 3px 10px;
+  border-radius: 5px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+  text-align: center;
+}
+
+.info {
+  margin-top: 30px;
+}
+
+.prevdetails-btn {
+  outline: none;
+  border: none;
+  color: #2769be;
+  background: #fff;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-size: 18px;
+}
+
+.nextdetails-btn {
+  outline: none;
+  border: none;
+  color: #2769be;
+  background: #fff;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-size: 18px;
+}

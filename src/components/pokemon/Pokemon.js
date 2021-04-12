@@ -1,43 +1,41 @@
 import React from "react";
-import axios from "axios";
-import { connect } from "react-redux";
-import { FETCH_INFO } from "../../redux/pokemon/actions";
+import { Link } from "react-router-dom";
+import typeColors from "./typeColors";
 import "./grid.css";
+import "./style.css";
 
-function Pokemon({ name, url, dispatch, listInfo }) {
-  // const fetchInfo = async () => {
-  //   const response = await axios(url).catch((err) => console.log(err));
-  //   if (response) {
-  //     const info = response.data;
-  //     const { front_default } = info.sprites.other["official-artwork"];
-  //     const { id } = info;
-  //     dispatch({ type: FETCH_INFO, payload: { id, front_default } });
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   fetchInfo();
-  // }, [url]);
-
+function Pokemon({
+  name,
+  id,
+  types,
+  sprites: {
+    other: {
+      "official-artwork": { front_default },
+    },
+  },
+}) {
   return (
-    <div className='col l-2-4'>
-      {/* {listInfo
-        .sort((a, b) => a.id - b.id)
-        .map((info, index) => {
+    <div className='col l-4'>
+      <div className='pkm-img'>
+        <Link to={`/pokemon/${id}`}>
+          <img src={front_default} alt={name} />
+        </Link>
+      </div>
+      <div className='pkm-nameid'>
+        <p className='pkm-id'>{`#${id}`}</p>
+        <Link to={`/pokemon/${id}`}>{name}</Link>
+      </div>
+      <div className='pkm-types'>
+        {types.map((type, index) => {
           return (
-            <div key={info.id}>
-              <img src={info.front_default} alt={name} />
-            </div>
+            <span style={{ color: typeColors[type.type.name] }} className='pkm-type' key={index}>
+              {type.type.name}
+            </span>
           );
-          // }
-        })} */}
-      <p>{name}</p>
+        })}
+      </div>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return { listInfo: state.listInfo };
-};
-
-export default connect(mapStateToProps)(Pokemon);
+export default Pokemon;
