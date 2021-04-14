@@ -1,0 +1,5 @@
+export const FETCH_LOADING = "FETCH_LOADING";
+export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+export const FETCH_ERROR = "FETCH_ERROR";
+export const ADD_PERSON = "ADD_PERSON";
+export const REMOVE_PERSON = "REMOVE_PERSON";

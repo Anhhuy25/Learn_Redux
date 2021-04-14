@@ -16,53 +16,65 @@ function PokemonDetail() {
   const { id } = useParams();
   let history = useHistory();
 
-  React.useEffect(() => {
-    const fetchURL = async () => {
-      setIsLoading(true);
-      const response = await axios(`${url}/${id}`).catch((err) => console.log(err));
-      let responsePrev;
-      if (id <= 1) {
-        responsePrev = await axios(`${url}/${id}`).catch((err) => console.log(err));
-      } else {
-        responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
-      }
-      const responseNext = await axios(`${url}/${parseInt(id) + 1}`).catch((err) => console.log(err));
+  const fetchURL = React.useCallback(async () => {
+    setIsLoading(true);
+    const response = await axios(`${url}/${id}`).catch((err) => console.log(err));
+    let responsePrev;
+    if (id <= 1) {
+      responsePrev = await axios(`${url}/${id}`).catch((err) => console.log(err));
+    } else {
+      responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+    }
+    const responseNext = await axios(`${url}/${parseInt(id) + 1}`).catch((err) => console.log(err));
 
-      if (response) {
-        setInfo(response.data);
-        setPrevPKM(responsePrev.data.name);
-        setNextPKM(responseNext.data.name);
-        setIsLoading(false);
-      }
-    };
-    fetchURL();
+    if (response && responsePrev && responseNext) {
+      setInfo(response.data);
+      setPrevPKM(responsePrev.data.name);
+      setNextPKM(responseNext.data.name);
+      setIsLoading(false);
+    }
   }, [id]);
+
+  React.useEffect(() => {
+    fetchURL();
+  }, [id, fetchURL]);
 
   const goToHome = () => {
     history.push("/");
   };
 
-  const handlePrev = async () => {
+  const handlePrev = React.useCallback(async () => {
     history.push(`/pokemon/${parseInt(id) - 1}`);
     setIsLoading(true);
-    const response = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+    //const response = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+    let responsePrev;
+    if (id <= 1) {
+      responsePrev = await axios(`${url}/${id}`).catch((err) => console.log(err));
+    } else {
+      responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+    }
 
-    if (response) {
-      setInfo(response.data);
+    if (responsePrev) {
+      setInfo(responsePrev.data);
+      setPrevPKM(responsePrev.data.name);
       setIsLoading(false);
     }
-  };
+  }, [id, history]);
 
-  const handleNext = async () => {
+  const handleNext = React.useCallback(async () => {
     history.push(`/pokemon/${parseInt(id) + 1}`);
     setIsLoading(true);
     const response = await axios(`${url}/${parseInt(id) + 1}`).catch((err) => console.log(err));
+    const responseNext = await axios(`${url}/${parseInt(id) + 2}`).catch((err) => console.log(err));
+    //const responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
 
     if (response) {
       setInfo(response.data);
+      //setPrevPKM(responsePrev.data.name);
+      setNextPKM(responseNext.data.name);
       setIsLoading(false);
     }
-  };
+  }, [id, history]);
 
   const { name, height, weight, types } = info;
   //console.log(info.sprites);
