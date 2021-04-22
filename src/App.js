@@ -1,16 +1,10 @@
 import React from "react";
-import ReduxThunk from "./components/redux-thunk/ReduxThunk";
-//import AppPKM from "./components/pokemon/AppPKM";
+import ReduxSaga from "./components/redux-saga/ReduxSaga";
 
 function App() {
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
   return (
-    <div style={{ textAlign: "center" }}>
-      {/* <AppPKM /> */}
-      <ReduxThunk />
+    <div>
+      <ReduxSaga />
     </div>
   );
 }

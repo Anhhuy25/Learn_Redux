@@ -1,43 +1,49 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import createSagaMiddleware from "redux-saga";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 //import { BrowserRouter } from "react-router-dom";
-import reducer from "./redux/redux-thunk/reducer";
-import "./components/pokemon/style.css";
+import rootReducer from "./redux/redux-saga/reducer";
+import rootSaga from "./redux/redux-saga/sagas";
 
-// // Dung cho action creator ma tra ve plain object
-// function plainObjMiddleware(store) {
-//   return function (next) {
-//     return function (action) {
-//       //console.log("Before dispatch", action, store.getState()); // store ban dau
-//       return next(action); // next(action) = dispatch({ type: ADD_PERSON, payload: info })
-//       //console.log("After dispatch", action, store.getState()); // store sau khi dispatch
-//     };
-//   };
-// }
+// Saga
+const composeEnhancers =
+  // process.env.NODE_ENV !== "production" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  //   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+  //       shouldHotReload: false,
+  //     })
+  //   : compose;
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        shouldHotReload: false,
+      })
+    : compose;
+const sagaMiddleware = createSagaMiddleware();
+const enhancer = composeEnhancers(applyMiddleware(thunk, sagaMiddleware));
 
-// // Dung cho action creator ma tra ve function, bao gom ca tra ve plain object
+const store = createStore(rootReducer, enhancer);
+
+sagaMiddleware.run(rootSaga);
+
+//------------------------------
+// Thunk
 // const asyncMiddleware = (store) => (next) => (action) => {
 //   // console.log("Next", next); // ham throw error
 //   // console.log("Action", action); // action = ham dc tra ve trong fetchUsers
 //   if (typeof action === "function") {
-//     console.log(action(next));
-//     console.log("Next", next);
-//     console.log("Action", action);
+//     // console.log(store);
+//     // console.log("Next: ", next);
+//     // console.log("Action: ", action);
 //     return action(next);
+//     //console.log(action(next));
 //   }
 //   return next(action);
 // };
 
-const store = createStore(
-  reducer,
-  //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk),
-);
-export default store;
+// const store = createStore(reducer, applyMiddleware(asyncMiddleware));
 
 ReactDOM.render(
   // <BrowserRouter>
