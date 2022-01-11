@@ -18,14 +18,25 @@ function PokemonDetail() {
 
   const fetchURL = React.useCallback(async () => {
     setIsLoading(true);
-    const response = await axios(`${url}/${id}`).catch((err) => console.log(err));
+    const response = await axios(`${url}/${id}`).catch((err) =>
+      console.log(err)
+    );
     let responsePrev;
     if (id <= 1) {
-      responsePrev = await axios(`${url}/${id}`).catch((err) => console.log(err));
+      responsePrev = await axios(`${url}/${id}`).catch((err) =>
+        console.log(err)
+      );
     } else {
-      responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+      responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) =>
+        console.log(err)
+      );
     }
-    const responseNext = await axios(`${url}/${parseInt(id) + 1}`).catch((err) => console.log(err));
+    let responseNext;
+    if (id < 898) {
+      responseNext = await axios(`${url}/${parseInt(id) + 1}`).catch((err) =>
+        console.log(err)
+      );
+    }
 
     if (response && responsePrev && responseNext) {
       setInfo(response.data);
@@ -46,12 +57,16 @@ function PokemonDetail() {
   const handlePrev = React.useCallback(async () => {
     history.push(`/pokemon/${parseInt(id) - 1}`);
     setIsLoading(true);
-    //const response = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+
     let responsePrev;
     if (id <= 1) {
-      responsePrev = await axios(`${url}/${id}`).catch((err) => console.log(err));
+      responsePrev = await axios(`${url}/${id}`).catch((err) =>
+        console.log(err)
+      );
     } else {
-      responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+      responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) =>
+        console.log(err)
+      );
     }
 
     if (responsePrev) {
@@ -64,48 +79,49 @@ function PokemonDetail() {
   const handleNext = React.useCallback(async () => {
     history.push(`/pokemon/${parseInt(id) + 1}`);
     setIsLoading(true);
-    const response = await axios(`${url}/${parseInt(id) + 1}`).catch((err) => console.log(err));
-    const responseNext = await axios(`${url}/${parseInt(id) + 2}`).catch((err) => console.log(err));
-    //const responsePrev = await axios(`${url}/${parseInt(id) - 1}`).catch((err) => console.log(err));
+    const response = await axios(`${url}/${parseInt(id) + 1}`).catch((err) =>
+      console.log(err)
+    );
 
     if (response) {
       setInfo(response.data);
-      //setPrevPKM(responsePrev.data.name);
-      setNextPKM(responseNext.data.name);
       setIsLoading(false);
     }
   }, [id, history]);
 
   const { name, height, weight, types } = info;
-  //console.log(info.sprites);
-  console.log(prevPKM, nextPKM);
+
   if (isLoading) {
     return <Loading />;
   }
 
   return (
     <div>
-      <h1 onClick={goToHome} className='info-name'>
+      <h1 onClick={goToHome} className="info-name">
         {name}
       </h1>
-      <div className='info-btn'>
+      <div className="info-btn">
         {id > 1 && (
-          <button className='prevdetails-btn' onClick={handlePrev}>
+          <button className="prevdetails-btn" onClick={handlePrev}>
             {`#${parseInt(id) - 1} ${prevPKM}`}
           </button>
         )}
         {id < 1118 && (
-          <button className='nextdetails-btn' onClick={handleNext}>
-            {`#${parseInt(id) + 1} ${nextPKM}`}
+          <button className="nextdetails-btn" onClick={handleNext}>
+            {id < 898 && `#${parseInt(id) + 1} ${nextPKM}`}
           </button>
         )}
       </div>
-      <div className='grid wide'>
-        <div className='row info'>
-          <div className='col l-6'>
-            <img className='info-img' src={info.sprites.other["official-artwork"].front_default} alt={name} />
+      <div className="grid wide">
+        <div className="row info">
+          <div className="col l-6">
+            <img
+              className="info-img"
+              src={info.sprites.other["official-artwork"].front_default}
+              alt={name}
+            />
           </div>
-          <div className='col l-6'>
+          <div className="col l-6">
             <table>
               <tbody>
                 <tr>
@@ -116,7 +132,11 @@ function PokemonDetail() {
                   <th>Type</th>
                   {types.map((type, index) => {
                     return (
-                      <td className='info-type' style={{ backgroundColor: typeColors[type.type.name] }} key={index}>
+                      <td
+                        className="info-type"
+                        style={{ backgroundColor: typeColors[type.type.name] }}
+                        key={index}
+                      >
                         {type.type.name}
                       </td>
                     );

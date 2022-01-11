@@ -38,11 +38,9 @@ function AppPKM({ dispatch }) {
   const loadingData = async (data) => {
     let pokemonData = await Promise.all(
       data.map(async (pkm) => {
-        //pkm is object(name,url)
-        //console.log(pkm);
         let pokemonRecord = await getPokemon(pkm);
         return pokemonRecord;
-      }),
+      })
     );
     dispatch({ type: FETCH_INFO, payload: pokemonData });
   };
@@ -92,12 +90,12 @@ function AppPKM({ dispatch }) {
     <Router>
       <div style={{ textAlign: "center" }}>
         <Switch>
-          <Route path='/' exact>
+          <Route path="/" exact>
             <h1>POKE-API</h1>
             <ListPKM next={handleNext} prev={handlePrev} />
           </Route>
         </Switch>
-        <Route path='/pokemon/:id' children={<PokemonDetail />}></Route>
+        <Route path="/pokemon/:id" children={<PokemonDetail />}></Route>
         {/* <div style={{ margin: "12px 0" }}>
         <ListPKM />
       </div> */}

@@ -1,10 +1,10 @@
 import React from "react";
-import ReduxSaga from "./components/redux-saga/ReduxSaga";
+import AppPKM from "./components/pokemon/AppPKM";
 
 function App() {
   return (
     <div>
-      <ReduxSaga />
+      <AppPKM />
     </div>
   );
 }
